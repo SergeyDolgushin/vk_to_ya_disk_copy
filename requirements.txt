@@ -1,0 +1,4 @@
+works_with_files.py - функции по работе с файлами и папками
+    check_file_exist() - ищем файл с токенами
+    read_token_from_file() - читаем токены YA и VK
+    create_temp_folder(), remove_temp_folder() - создаем и удаляем временную папку для хранения скачиваемых файлов
