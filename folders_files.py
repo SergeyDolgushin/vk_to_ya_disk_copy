@@ -1,4 +1,6 @@
+import json
 import os
+import wget
 
 name = "token_ya_disk.txt"
 
@@ -38,8 +40,16 @@ def write_test_file(file_name = 'test.txt', path = os.getcwd() + "\\temp\\"):
     with open(path + file_name, 'w') as text:
         return text.write("test text")
 
+def write_json_file(data, file_name = '/test.json', path = os.getcwd()):
+    with open(path+file_name, 'w') as f:
+        json.dump(data, f, ensure_ascii=False, indent=2)
 
-# if __name__ == '__main__':
+def read_json_file(file_name = '/test.json', path = os.getcwd()):
+    with open(path+file_name, encoding = 'utf-8') as f:
+        return json.load(f)
+
+
+if __name__ == '__main__':
 #     print(os.getcwd())
 #     print(check_file_exist(name, path = os.getcwd()))
 #     print(read_token_from_file(check_file_exist(name, path = os.getcwd()))["VK"])
@@ -47,4 +57,18 @@ def write_test_file(file_name = 'test.txt', path = os.getcwd() + "\\temp\\"):
     # remove_temp_folder()
         
     # write_test_file()        
-    
+    res = read_json_file()
+    print(res['response']['items'][0])
+    for i in res['response']['items'][0].items():
+        print("next", i)
+    print(res['response']['items'][0]['sizes'])
+    for i in res['response']['items'][0]['sizes']:
+        print("next", i)
+    # print(res['response']['items'][0]['sizes'][-1])
+    # print(res['response']['items'][0]['sizes'][-1]['url'])
+    res = sorted(res['response']['items'][0]['sizes'], key=lambda x: x['height'])
+    print(res[-1])
+
+    path = os.getcwd()
+    url = f"{res[-1]['url']}" 
+    wget.download(url, path + '/test.jpg') 

@@ -2,6 +2,8 @@ import time
 import requests
 import pandas as pd
 
+my_id = 1584850
+
 class VkUser:
     url = 'https://api.vk.com/method/'
     def __init__(self, token, version):
@@ -80,3 +82,14 @@ class VkUser:
             else:
                 break
         return newsfeed_df
+
+    def get_photos(self, album_id='profile', user_id = my_id, extended =1):
+        photos_url = self.url + 'photos.get'
+        photos_params = {
+            'album_id': album_id,
+            'count': 100,
+            'user_id': user_id,
+            'extended': extended
+        }
+        res = requests.get(photos_url, params={**self.params, **photos_params}).json()
+        return res
