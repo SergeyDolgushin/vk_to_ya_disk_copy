@@ -83,13 +83,27 @@ class VkUser:
                 break
         return newsfeed_df
 
-    def get_photos(self, album_id='profile', user_id = my_id, extended =1):
+    def get_photos(self, album_id='profile', user_id = my_id, extended =1, photo_sizes = 1, count = '5', rev = 1):
         photos_url = self.url + 'photos.get'
         photos_params = {
             'album_id': album_id,
-            'count': 100,
+            'count': count,
             'user_id': user_id,
-            'extended': extended
+            'extended': extended,
+            'photo_sizes': photo_sizes,
+            'rev': rev
+        }
+        res = requests.get(photos_url, params={**self.params, **photos_params}).json()
+        return res
+
+    def get_albums(self, user_id = my_id, extended =1, photo_sizes = 1, count = '5', need_system = 1):
+        photos_url = self.url + 'photos.getAlbums'
+        photos_params = {
+            'count': count,
+            'user_id': user_id,
+            'extended': extended,
+            'photo_sizes': photo_sizes,
+            'need_system': need_system
         }
         res = requests.get(photos_url, params={**self.params, **photos_params}).json()
         return res

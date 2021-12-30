@@ -45,5 +45,4 @@ class YandexDisk:
         href = self._get_upload_link(disk_file_path=disk_file_path).get("href", "")
         response = requests.put(href, data=open(filename, 'rb'))
         response.raise_for_status()
-        if response.status_code == 201:
-            print("Success")
+        return response.status_code
