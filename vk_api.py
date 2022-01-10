@@ -2,6 +2,7 @@ import time
 import requests
 import pandas as pd
 
+
 my_id = 1584850
 
 class VkUser:
@@ -107,3 +108,5 @@ class VkUser:
         }
         res = requests.get(photos_url, params={**self.params, **photos_params}).json()
         return res
+
+

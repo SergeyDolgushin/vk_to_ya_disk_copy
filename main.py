@@ -4,7 +4,7 @@ import os
 from vk_api import VkUser
 import progressbar
 import time
-
+from google_drive import *
 
 
 if __name__ == '__main__':
@@ -13,7 +13,7 @@ if __name__ == '__main__':
     myfiles = files.MyFiles()
     status_ya = []
    
-    myfiles.remove_temp_folder()
+    # myfiles.remove_temp_folder()
     
 
     token = myfiles.read_token_from_file(myfiles.check_file_exist(name))
@@ -30,14 +30,21 @@ if __name__ == '__main__':
     responce = ya.create_new_folder("test")
     bar = progressbar.ProgressBar(max_value = progressbar.UnknownLength)
     for name in os.listdir(temp_path):
-        if '.jpg' in name:
+        if '.jpg' or '.json' in name:
             count = 0
             status_ya.append(ya.upload_file_to_disk("test/" + f"{name}", temp_path + name))
-            time.sleep(0.05)
+            time.sleep(0.3)
             count += 1
             bar.update(count)
     print()     
     print(status_ya)
+
+
+    # загрузка одной картинки на гугл диск
+
+    DRIVE = discovery.build('drive', 'v3', http=auth_drive().authorize(Http()))
+    google_folder_id = create_folder(DRIVE, list_res = list_res(DRIVE))
+    load_file(DRIVE, folder_googledisk_id = google_folder_id, filename = "5.jpg") 
     
 
     
