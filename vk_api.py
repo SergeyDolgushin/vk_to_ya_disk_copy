@@ -4,6 +4,7 @@ import pandas as pd
 
 
 my_id = 1584850
+my_id = 552934290
 
 class VkUser:
     url = 'https://api.vk.com/method/'

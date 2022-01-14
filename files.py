@@ -76,6 +76,7 @@ class MyFiles:
         temp = []
         file_info = dict.fromkeys(['file_name', 'size'])
         file_info_list = []
+        previous_data = []
         for i in range(len(res)):
             file_info_list = []
             id_foto.fromkeys([res[i]['id']])  
@@ -92,7 +93,11 @@ class MyFiles:
             url = str(temp[-1]['url'])
             file_info['size'] = temp[-1]['type']
             file_info_list.append(file_info)
-            self.write_json_file(file_info_list, file_name = '\\temp\\' + file_name + '.json')
+            if os.path.exists(self.path + '\\temp\\' + 'info' + '.json'):
+                previous_data = self.read_json_file(file_name = '\\temp\\info.json')
+                previous_data.extend(file_info_list)
+                file_info_list = previous_data
+            self.write_json_file(file_info_list, file_name = '\\temp\\' + 'info' + '.json')
             wget.download(url, self.path + '\\temp\\' + file_name + '.jpg') 
             temp = []
 
